@@ -1,0 +1,39 @@
+﻿@model WebLab1.Models.ViewModels.StudentVM
+
+
+@{
+    ViewBag.Title = "StudentDetails";
+}
+
+<h2>Студент</h2>
+<hr />
+<div class="container">
+    <div class="row bg-info" >
+        <div class="col-md-2">@Html.LabelFor(m => m.Фамилия)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.Фамилия)</div>
+        <div class="col-md-2">@Html.LabelFor(m => m.Пол)</div>
+        <div class="col-md-4">@if (Model.Пол) { <text>Мужской</text>} else { <text>Женсикй</text>}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">@Html.LabelFor(m => m.Имя)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.Имя)</div>
+        <div class="col-md-2">@Html.LabelFor(m => m.Дата_рождения)</div>
+        <div class="col-md-2">@Html.DisplayFor(m => m.Дата_рождения, new { htmlAttributes = new { @type = "date" } })</div>
+    </div>
+    <div class="row bg-info">
+        <div class="col-md-2">@Html.LabelFor(m => m.Отчество)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.Отчество)</div>
+        <div class="col-md-2">@Html.LabelFor(m => m.Уровень_владения_ИЯ)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.Уровень_владения_ИЯ)</div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">@Html.LabelFor(m => m.Адрес_проживания)</div>
+        <div class="col-md-4">@Html.DisplayFor(m => m.Адрес_проживания)</div>
+    </div>
+</div>
+
+<p>
+    @Html.ActionLink("Назад", "ListOfStudents")
+</p>
+
+

@@ -1,0 +1,28 @@
+﻿@model List<WebLab1.Models.Entities.Студент>
+@{
+    ViewBag.Title = "ListOfPeople";
+}
+
+<h2>Список студентов</h2>
+@if (User.IsInRole("Admin"))
+{
+    @Html.ActionLink("Добавить студента", "CreateStudent", "Lab2", new { @class = "btn btn-success" })
+}
+<div class="row">
+    <div class="col-md-4"><strong>ФИО</strong></div>
+    <div class="col-md-2"><strong>Уровень владения И.Я.</strong></div>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="col-md-2"><strong>#</strong></div>
+        if (User.IsInRole("Admin"))
+        {
+            <div class="col-md-2"><strong>#</strong></div>
+            <div class="col-md-2"><strong>#</strong></div>
+        }
+    }
+</div>
+
+@foreach (var студент in Model)
+{
+    @Html.Partial("StudentOverviewPartial", студент)//возвращает HTML код представления в виде строки
+}

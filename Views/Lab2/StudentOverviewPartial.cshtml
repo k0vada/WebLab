@@ -1,0 +1,14 @@
+﻿@model WebLab1.Models.Entities.Студент
+<div class="row">
+    <div class="col-md-4">@Model.Фамилия @Model.Имя @Model.Отчество (@Html.Action("Age", new { studentID = Model.ID_студента }))</div>
+    <div class="col-md-2">@Model.Уровень_владения_ИЯ</div>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="col-md-2">@Html.ActionLink("Подробнее", "StudentDetails", "Lab2", new { studentID = Model.ID_студента }, null)</div>
+        if (User.IsInRole("Admin"))
+        {
+            <div class="col-md-2">@Html.ActionLink("Редактировать", "EditStudent", new { controller = "Lab2", studentID = Model.ID_студента })</div>
+            <div class="col-md-2">@Html.ActionLink("Удалить", "DeleteStudent", new { controller = "Lab2", studentID = Model.ID_студента })</div>
+        }
+    }
+</div>

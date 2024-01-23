@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="903e76c408c34f9f9740c763b99a48a0" Name="Diagram1">
+        <EntityTypeShape EntityType="I12_KovalevDOModel.Группа" Width="1.5" PointX="0.5" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="I12_KovalevDOModel.Студент" Width="1.5" PointX="4.5" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="I12_KovalevDOModel.Студент_в_группе" Width="1.5" PointX="2.5" PointY="0.625" IsExpanded="true" />
+        <AssociationConnector Association="I12_KovalevDOModel.FK_Студенты_в_группах_Группы" ManuallyRouted="false" />
+        <AssociationConnector Association="I12_KovalevDOModel.FK_Студенты_в_группах_Студенты" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="I12_KovalevDOModel.Пользователь" Width="1.5" PointX="6.5" PointY="0.625" />
+        <EntityTypeShape EntityType="I12_KovalevDOModel.Роль" Width="1.5" PointX="8.5" PointY="0.625" />
+        <AssociationConnector Association="I12_KovalevDOModel.FK_Пользователь_Роль" />
+        <AssociationConnector Association="I12_KovalevDOModel.FK_Студенты_Пользователь" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

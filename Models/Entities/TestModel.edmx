@@ -1,0 +1,353 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище I12_KovalevDOModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Группы">
+          <Key>
+            <PropertyRef Name="ID группы" />
+          </Key>
+          <Property Name="ID группы" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ID института" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Наименование" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Год поступления" Type="int" Nullable="false" />
+          <Property Name="Длительность обучения" Type="int" Nullable="false" />
+          <Property Name="Код формы обучения" Type="int" Nullable="false" />
+          <Property Name="Код направления подготовки" Type="char" MaxLength="8" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Пользователь">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Login" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PasswordHash" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Salt" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserRole" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Роль">
+          <Key>
+            <PropertyRef Name="RoleCode" />
+          </Key>
+          <Property Name="RoleCode" Type="int" Nullable="false" />
+          <Property Name="RoleName" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Студенты">
+          <Key>
+            <PropertyRef Name="ID студента" />
+          </Key>
+          <Property Name="ID студента" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Фамилия" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Имя" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Отчество" Type="nvarchar" MaxLength="50" />
+          <Property Name="Пол" Type="bit" Nullable="false" />
+          <Property Name="Адрес проживания" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="Дата рождения" Type="date" Nullable="false" />
+          <Property Name="Уровень владения ИЯ" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Id пользователя" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Студенты в группах">
+          <Key>
+            <PropertyRef Name="ID студента" />
+            <PropertyRef Name="ID группы" />
+          </Key>
+          <Property Name="ID студента" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ID группы" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Код формы оплаты" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Пользователь_Роль">
+          <End Role="Роль" Type="Self.Роль" Multiplicity="1" />
+          <End Role="Пользователь" Type="Self.Пользователь" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Роль">
+              <PropertyRef Name="RoleCode" />
+            </Principal>
+            <Dependent Role="Пользователь">
+              <PropertyRef Name="UserRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Студенты в группах_Группы">
+          <End Role="Группы" Type="Self.Группы" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Студенты в группах" Type="Self.Студенты в группах" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Группы">
+              <PropertyRef Name="ID группы" />
+            </Principal>
+            <Dependent Role="Студенты в группах">
+              <PropertyRef Name="ID группы" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Студенты в группах_Студенты">
+          <End Role="Студенты" Type="Self.Студенты" Multiplicity="1" />
+          <End Role="Студенты в группах" Type="Self.Студенты в группах" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Студенты">
+              <PropertyRef Name="ID студента" />
+            </Principal>
+            <Dependent Role="Студенты в группах">
+              <PropertyRef Name="ID студента" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Студенты_Пользователь">
+          <End Role="Пользователь" Type="Self.Пользователь" Multiplicity="1" />
+          <End Role="Студенты" Type="Self.Студенты" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Пользователь">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Студенты">
+              <PropertyRef Name="Id пользователя" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище I12_KovalevDOModelContainer">
+          <EntitySet Name="Группы" EntityType="Self.Группы" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Пользователь" EntityType="Self.Пользователь" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Роль" EntityType="Self.Роль" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Студенты" EntityType="Self.Студенты" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Студенты в группах" EntityType="Self.Студенты в группах" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Пользователь_Роль" Association="Self.FK_Пользователь_Роль">
+            <End Role="Роль" EntitySet="Роль" />
+            <End Role="Пользователь" EntitySet="Пользователь" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Студенты в группах_Группы" Association="Self.FK_Студенты в группах_Группы">
+            <End Role="Группы" EntitySet="Группы" />
+            <End Role="Студенты в группах" EntitySet="Студенты в группах" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Студенты в группах_Студенты" Association="Self.FK_Студенты в группах_Студенты">
+            <End Role="Студенты" EntitySet="Студенты" />
+            <End Role="Студенты в группах" EntitySet="Студенты в группах" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Студенты_Пользователь" Association="Self.FK_Студенты_Пользователь">
+            <End Role="Пользователь" EntitySet="Пользователь" />
+            <End Role="Студенты" EntitySet="Студенты" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="I12_KovalevDOModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Группа">
+          <Key>
+            <PropertyRef Name="ID_группы" />
+          </Key>
+          <Property Name="ID_группы" Type="Guid" Nullable="false" />
+          <Property Name="ID_института" Type="Guid" Nullable="false" />
+          <Property Name="Наименование" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Год_поступления" Type="Int32" Nullable="false" />
+          <Property Name="Длительность_обучения" Type="Int32" Nullable="false" />
+          <Property Name="Код_формы_обучения" Type="Int32" Nullable="false" />
+          <Property Name="Код_направления_подготовки" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Студенты_в_группах" Relationship="Self.FK_Студенты_в_группах_Группы" FromRole="Группы" ToRole="Студенты_в_группах" />
+        </EntityType>
+        <EntityType Name="Студент">
+          <Key>
+            <PropertyRef Name="ID_студента" />
+          </Key>
+          <Property Name="ID_студента" Type="Guid" Nullable="false" />
+          <Property Name="Фамилия" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Имя" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Отчество" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Пол" Type="Boolean" Nullable="false" />
+          <Property Name="Адрес_проживания" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Дата_рождения" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Уровень_владения_ИЯ" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Студенты_в_группах" Relationship="Self.FK_Студенты_в_группах_Студенты" FromRole="Студенты" ToRole="Студенты_в_группах" />
+          <Property Name="Id_пользователя" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Пользователь" Relationship="I12_KovalevDOModel.FK_Студенты_Пользователь" FromRole="Студент" ToRole="Пользователь" />
+        </EntityType>
+        <EntityType Name="Студент_в_группе">
+          <Key>
+            <PropertyRef Name="ID_студента" />
+            <PropertyRef Name="ID_группы" />
+          </Key>
+          <Property Name="ID_студента" Type="Guid" Nullable="false" />
+          <Property Name="ID_группы" Type="Guid" Nullable="false" />
+          <Property Name="Код_формы_оплаты" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Группы" Relationship="Self.FK_Студенты_в_группах_Группы" FromRole="Студенты_в_группах" ToRole="Группы" />
+          <NavigationProperty Name="Студенты" Relationship="Self.FK_Студенты_в_группах_Студенты" FromRole="Студенты_в_группах" ToRole="Студенты" />
+        </EntityType>
+        <Association Name="FK_Студенты_в_группах_Группы">
+          <End Role="Группы" Type="I12_KovalevDOModel.Группа" Multiplicity="1" />
+          <End Role="Студенты_в_группах" Type="I12_KovalevDOModel.Студент_в_группе" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Группы">
+              <PropertyRef Name="ID_группы" />
+            </Principal>
+            <Dependent Role="Студенты_в_группах">
+              <PropertyRef Name="ID_группы" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Студенты_в_группах_Студенты">
+          <End Role="Студенты" Type="I12_KovalevDOModel.Студент" Multiplicity="1" />
+          <End Role="Студенты_в_группах" Type="I12_KovalevDOModel.Студент_в_группе" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Студенты">
+              <PropertyRef Name="ID_студента" />
+            </Principal>
+            <Dependent Role="Студенты_в_группах">
+              <PropertyRef Name="ID_студента" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Группы" EntityType="I12_KovalevDOModel.Группа" />
+          <EntitySet Name="Студенты" EntityType="I12_KovalevDOModel.Студент" />
+          <EntitySet Name="Студенты_в_группах" EntityType="I12_KovalevDOModel.Студент_в_группе" />
+          <AssociationSet Name="FK_Студенты_в_группах_Группы" Association="Self.FK_Студенты_в_группах_Группы">
+            <End Role="Группы" EntitySet="Группы" />
+            <End Role="Студенты_в_группах" EntitySet="Студенты_в_группах" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Студенты_в_группах_Студенты" Association="Self.FK_Студенты_в_группах_Студенты">
+            <End Role="Студенты" EntitySet="Студенты" />
+            <End Role="Студенты_в_группах" EntitySet="Студенты_в_группах" />
+          </AssociationSet>
+          <EntitySet Name="Пользователь" EntityType="I12_KovalevDOModel.Пользователь" />
+          <EntitySet Name="Роль" EntityType="I12_KovalevDOModel.Роль" />
+          <AssociationSet Name="FK_Пользователь_Роль" Association="I12_KovalevDOModel.FK_Пользователь_Роль">
+            <End Role="Роль" EntitySet="Роль" />
+            <End Role="Пользователь" EntitySet="Пользователь" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Студенты_Пользователь" Association="I12_KovalevDOModel.FK_Студенты_Пользователь">
+            <End Role="Пользователь" EntitySet="Пользователь" />
+            <End Role="Студент" EntitySet="Студенты" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Пользователь">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Login" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PasswordHash" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Salt" Type="Guid" Nullable="false" />
+          <Property Name="UserRole" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Роль" Relationship="I12_KovalevDOModel.FK_Пользователь_Роль" FromRole="Пользователь" ToRole="Роль" />
+          <NavigationProperty Name="Студенты" Relationship="I12_KovalevDOModel.FK_Студенты_Пользователь" FromRole="Пользователь" ToRole="Студент" />
+        </EntityType>
+        <EntityType Name="Роль">
+          <Key>
+            <PropertyRef Name="RoleCode" />
+          </Key>
+          <Property Name="RoleCode" Type="Int32" Nullable="false" />
+          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Пользователь" Relationship="I12_KovalevDOModel.FK_Пользователь_Роль" FromRole="Роль" ToRole="Пользователь" />
+        </EntityType>
+        <Association Name="FK_Пользователь_Роль">
+          <End Type="I12_KovalevDOModel.Роль" Role="Роль" Multiplicity="1" />
+          <End Type="I12_KovalevDOModel.Пользователь" Role="Пользователь" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Роль">
+              <PropertyRef Name="RoleCode" />
+            </Principal>
+            <Dependent Role="Пользователь">
+              <PropertyRef Name="UserRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Студенты_Пользователь">
+          <End Type="I12_KovalevDOModel.Пользователь" Role="Пользователь" Multiplicity="1" />
+          <End Type="I12_KovalevDOModel.Студент" Role="Студент" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Пользователь">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Студент">
+              <PropertyRef Name="Id_пользователя" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище I12_KovalevDOModelContainer" CdmEntityContainer="Entities2">
+          <EntitySetMapping Name="Группы">
+            <EntityTypeMapping TypeName="I12_KovalevDOModel.Группа">
+              <MappingFragment StoreEntitySet="Группы">
+                <ScalarProperty Name="ID_группы" ColumnName="ID группы" />
+                <ScalarProperty Name="ID_института" ColumnName="ID института" />
+                <ScalarProperty Name="Наименование" ColumnName="Наименование" />
+                <ScalarProperty Name="Год_поступления" ColumnName="Год поступления" />
+                <ScalarProperty Name="Длительность_обучения" ColumnName="Длительность обучения" />
+                <ScalarProperty Name="Код_формы_обучения" ColumnName="Код формы обучения" />
+                <ScalarProperty Name="Код_направления_подготовки" ColumnName="Код направления подготовки" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Студенты">
+            <EntityTypeMapping TypeName="I12_KovalevDOModel.Студент">
+              <MappingFragment StoreEntitySet="Студенты">
+                <ScalarProperty Name="Id_пользователя" ColumnName="Id пользователя" />
+                <ScalarProperty Name="ID_студента" ColumnName="ID студента" />
+                <ScalarProperty Name="Фамилия" ColumnName="Фамилия" />
+                <ScalarProperty Name="Имя" ColumnName="Имя" />
+                <ScalarProperty Name="Отчество" ColumnName="Отчество" />
+                <ScalarProperty Name="Пол" ColumnName="Пол" />
+                <ScalarProperty Name="Адрес_проживания" ColumnName="Адрес проживания" />
+                <ScalarProperty Name="Дата_рождения" ColumnName="Дата рождения" />
+                <ScalarProperty Name="Уровень_владения_ИЯ" ColumnName="Уровень владения ИЯ" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Студенты_в_группах">
+            <EntityTypeMapping TypeName="I12_KovalevDOModel.Студент_в_группе">
+              <MappingFragment StoreEntitySet="Студенты в группах">
+                <ScalarProperty Name="ID_студента" ColumnName="ID студента" />
+                <ScalarProperty Name="ID_группы" ColumnName="ID группы" />
+                <ScalarProperty Name="Код_формы_оплаты" ColumnName="Код формы оплаты" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Пользователь">
+            <EntityTypeMapping TypeName="I12_KovalevDOModel.Пользователь">
+              <MappingFragment StoreEntitySet="Пользователь">
+                <ScalarProperty Name="UserRole" ColumnName="UserRole" />
+                <ScalarProperty Name="Salt" ColumnName="Salt" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Роль">
+            <EntityTypeMapping TypeName="I12_KovalevDOModel.Роль">
+              <MappingFragment StoreEntitySet="Роль">
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RoleCode" ColumnName="RoleCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

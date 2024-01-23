@@ -1,0 +1,69 @@
+﻿@model IEnumerable<WebLab1.Models.Entities.Студент>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Фамилия)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Имя)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Отчество)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Пол)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Адрес_проживания)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Дата_рождения)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Уровень_владения_ИЯ)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Фамилия)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Имя)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Отчество)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Пол)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Адрес_проживания)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Дата_рождения)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Уровень_владения_ИЯ)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID_студента }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID_студента }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID_студента })
+        </td>
+    </tr>
+}
+
+</table>
